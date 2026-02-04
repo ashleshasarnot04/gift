@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever Us</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- 💖 FLOATING HEARTS CONTAINER -->
+<div id="hearts"></div>
+
+<div class="reel">
+
+  <div class="screen active" id="screen1">
+    <img class="gif"
+      src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif">
+    <h1>Will you be my Valentine? 💘</h1>
+
+    <div class="buttons">
+      <button class="yes" id="yesBtn">Yes</button>
+      <button class="no" id="noBtn">No</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2 -->
+  <div class="screen" id="screen2">
+    <img class="gif"
+      src="img3.gif">
+    <h1>I knew you would say yes 💖</h1>
+    <p>You always choose us 🥹</p>
+    <button class="yes" id="openGifts">Your Gifts Are Ready 🎁</button>
+  </div>
+
+  <!-- SCREEN 3 -->
+  <div class="screen" id="screen3">
+    <h2>Open your gifts 🎁</h2>
+    <div class="gift-list" id="giftList"></div>
+  </div>
+
+</div>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="perfect.mpeg" type="audio/mpeg">
+</audio>
+
+<script>
+/* 🎵 MUSIC */
+const bgMusic = document.getElementById("bgMusic");
+bgMusic.volume = 0.5;
+
+/* ❌ NO BUTTON TEXTS */
+const noTexts = [
+  "Are you sure? 🥺","Really sure?? 😭","Think again…",
+  "Pookie please 💔","Just say yes ❤️"
+];
+let noIndex = 0;
+noBtn.onclick = () => {
+  noBtn.innerText = noTexts[noIndex++ % noTexts.length];
+  yesBtn.style.fontSize =
+    (parseFloat(getComputedStyle(yesBtn).fontSize) * 1.25) + "px";
+};
+
+/* ✅ YES CLICK */
+yesBtn.onclick = () => {
+  bgMusic.play();
+  launchConfetti();
+
+  screen1.classList.remove("active");
+  screen2.classList.add("active");
+};
+
+openGifts.onclick = () => {
+  screen2.classList.remove("active");
+  screen3.classList.add("active");
+};
+
+/* 🎉 CONFETTI */
+function launchConfetti(){
+  for(let i=0;i<120;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.backgroundColor=
+      ["#ff4d6d","#ffafcc","#ffd6e0","#ff85a1"][Math.floor(Math.random()*4)];
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+/* 💖 FLOATING HEARTS */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerText="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=16+Math.random()*20+"px";
+  document.getElementById("hearts").appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},350);
+
+/* ---------- GIFTS DATA ---------- */
+const paragraphs = [
+  "A lifetime of love and laughter with you.",
+  "Endless adventures and cherished memories together.",
+  "My heart is yours, forever and always.",
+  "You are my sunshine on the darkest days.",
+  "Together, we can conquer anything that comes our way.",
+  "You complete me in every way possible.",
+  "I am grateful for every moment spent with you.",
+  "You are my best friend and soulmate.",
+  "I promise to love and cherish you forever.",
+  "With you, every day is a new adventure.",
+  "You make my world brighter just by being in it."
+];
+
+/* ---------- CREATE 16 GIFTS ---------- */
+const giftList = document.getElementById("giftList");
+
+paragraphs.forEach((text, i) => {
+  giftList.innerHTML += `
+    <div class="gift" onclick="toggleGift(this)">
+      <div class="gift-title"> For You Dear Husband🎁</div>
+      <div class="gift-content">
+        <img src="m${i + 1}.png" alt="Gift Image ${i + 1}">
+        <p>${text}</p>
+      </div>
+    </div>
+  `;
+});
+
+function toggleGift(el){
+  el.querySelector(".gift-content").classList.toggle("show");
+}
+</script>
+
+</body>
+</html>
